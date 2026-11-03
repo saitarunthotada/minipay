@@ -2,16 +2,16 @@
 
 Order management backend for INR payments, built with Spring Boot and hexagonal (ports and adapters) architecture. Amounts are stored in paise to avoid floating-point issues.
 
-The order management foundation is complete. Payment gateway functionality is still pending (see [Project status](#project-status)).
+Order management is complete and the payment domain model is in place. Payment use cases, the REST API and gateway integration are still pending (see [Project status](#project-status)).
 
 ## Project status
 
-**Foundation complete.** Order management is in place; payment gateway functionality is still pending.
+**Foundation complete, payment domain in progress.** The order module is done. The payment domain model, repository port and database migration exist; use cases, persistence adapter and API are next.
 
 | Area | Status |
 |---|---|
 | Order management | Complete |
-| Payment domain | Next |
+| Payment domain | In progress (model, port and migration done) |
 | Razorpay integration | Pending |
 | Idempotency and retries | Pending |
 | Webhooks and reconciliation | Pending |
@@ -28,7 +28,7 @@ The order management foundation is complete. Payment gateway functionality is st
 
 ## Architecture
 
-The `order` module follows ports and adapters, so the domain has no dependency on Spring or the database.
+The `order` and `payment` modules follow ports and adapters, so the domain has no dependency on Spring or the database.
 
 ```
 com.minipay
@@ -41,6 +41,10 @@ com.minipay
 │   └── adapter
 │       ├── in/web             # OrderController, request/response DTOs
 │       └── out/persistence    # JPA entity, Spring Data repo, adapter
+├── payment
+│   ├── domain                 # Payment, PaymentStatus
+│   └── port
+│       └── out                # PaymentRepository
 └── shared
     └── exception              # GlobalExceptionHandler
 ```
@@ -84,7 +88,7 @@ On Windows PowerShell:
 .\mvnw spring-boot:run
 ```
 
-Flyway creates the `orders` table automatically on startup. The app runs on `http://localhost:8080`.
+Flyway creates the `orders` and `payments` tables automatically on startup. The app runs on `http://localhost:8080`.
 
 ### 3. Run the tests
 
@@ -143,7 +147,7 @@ The PostgreSQL JDBC driver sends the JVM timezone to the server, and some Postgr
 
 ## Roadmap
 
-1. Payment domain (next)
+1. Payment domain (in progress): use cases, persistence adapter, API
 2. Razorpay integration
 3. Idempotency and retries
 4. Webhooks and reconciliation
