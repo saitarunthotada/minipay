@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:16
+    command: ["postgres", "-c", "timezone=Asia/Kolkata"]
+    environment:
+      POSTGRES_DB: minipay
+      POSTGRES_USER: minipay
+      POSTGRES_PASSWORD: minipay
+    ports:
+      - "5432:5432"
+    volumes:
+      - minipay_data:/var/lib/postgresql/data
+volumes:
+  minipay_data:

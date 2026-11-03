@@ -1,0 +1,22 @@
+
+spring:
+  application:
+    name: minipay
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/minipay
+    username: minipay
+    password: minipay
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: Asia/Calcutta
+
+  flyway:
+    enabled: true
